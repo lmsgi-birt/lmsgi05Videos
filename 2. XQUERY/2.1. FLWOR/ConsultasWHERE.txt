@@ -1,0 +1,93 @@
+(: Consulta 1. Expresión XPath con predicado y FOR :)
+for $a in //poliza[numero>=99000001]
+return
+<datos>
+  {$a/tomador ,$a/numero}
+</datos>
+
+(: Consulta 1. Expresión XPath con predicado y LET :)
+let $a:= //poliza[numero>=99000001]
+return
+<datos>
+  {$a/tomador ,$a/numero}
+</datos>
+
+(: Consulta 1. Expresión con WHERE y FOR :)
+for $a in //poliza
+where $a/numero>=99000001
+return
+<datos>
+  {$a/tomador ,$a/numero}
+</datos>
+
+(: Consulta 1. Expresión con WHERE y LET :)
+let $a:= //poliza
+where $a/numero>=99000001
+return
+<datos>
+  {$a/tomador ,$a/numero}
+</datos>
+
+(: Consulta 2. Expresión con selección XPath con predicado :)
+for $a in //poliza[numero>=99000001]
+let $b := $a/tomador, $c := $a/numero, $d := count($a/asegurado)
+return
+<datos num="{$d}">
+  {$b , $c}
+</datos>
+
+(: Consulta 2. Expresión con WHERE :)
+for $a in //poliza
+let $b := $a/tomador, $c := $a/numero, $d := count($a/asegurado)
+where $a/numero>=99000001
+return
+<datos num="{$d}">
+  {$b , $c}
+</datos>
+
+(: Consulta 3. Expresión con WHERE, operador and y función count(). El número de asegurados es mayor que 2 :)
+for $a in //poliza
+let $b := $a/tomador, $c := $a/numero, $d := count($a/asegurado)
+where $a/numero>=99000001 and count($a/asegurado)>2
+return
+<datos num="{$d}">
+  {$b , $c}
+</datos>
+
+(: Consulta 4. Expresión con WHERE, operador or y función count(). El número de asegurados es mayor que 2 :)
+for $a in //poliza
+let $b := $a/tomador, $c := $a/numero, $d := count($a/asegurado)
+where $a/numero>=99000001 or count($a/asegurado)>2
+return
+<datos num="{$d}">
+  {$b , $c}
+</datos>
+
+(: Consulta 4. Expresión con WHERE, operador or y función count(). El número de asegurados es mayor que 2. Se aprovecha $d :)
+for $a in //poliza
+let $b := $a/tomador, $c := $a/numero, $d := count($a/asegurado)
+where $a/numero>=99000001 or $d>2
+return
+<datos num="{$d}">
+  {$b , $c}
+</datos>
+
+(: Consulta 5. Expresión con WHERE, operador and y función starts-with(). El tomador empieza por "Pedro" :)
+for $a in //poliza
+let $b := $a/tomador, $c := $a/numero, $d := count($a/asegurado)
+where $a/numero>=99000001 and starts-with($b, "Pedro")
+return
+<datos num="{$d}">
+  {$b , $c}
+</datos>
+
+(: Consulta 5. Expresión con WHERE, operador and y funciones starts-with() y upper-case(). El tomador empieza por "PEDRO".
+   La función upper-case() elimina las etiquetas y se queda solo con el valor en mayúsculas. Se le debe añadir la etiqueta que necesitemos :)
+for $a in //poliza
+let $b := upper-case($a/tomador), $c := $a/numero, $d := count($a/asegurado)
+where $a/numero>=99000001 and starts-with($b, "PEDRO")
+return
+<datos num="{$d}">
+  <tomador>{$b}</tomador>
+  {$c}
+</datos>

@@ -1,0 +1,73 @@
+(: Consulta 1 con FOR :)
+for $poliza in //poliza
+return
+  $poliza/tomador
+
+(: Consulta 1 con LET :)
+let $poliza := //poliza
+return
+  $poliza/tomador
+
+(: Consulta 2 con FOR. Cada tomador se incluye en una etiqueta "datos" diferente :)
+for $poliza in //poliza
+return
+  <datos>
+    {$poliza/tomador}
+  </datos>
+
+(: Consulta 2 con LET. Todos los tomadores se agrupan en la misma etiqueta "datos" :)
+let $poliza := //poliza
+return
+	<datos>
+		{$poliza/tomador}
+	</datos>
+
+(: Consulta 3 con FOR. Cuenta los tomadores de cada poliza. :)
+for $poliza in //poliza
+return
+  <datos>
+    {$poliza/tomador , count($poliza)}
+  </datos>
+
+(: Consulta 3 con LET. Cuenta todos los tomadores. :)
+let $poliza := //poliza
+return
+  <datos>
+    {$poliza/tomador , count($poliza)}
+  </datos>
+
+(: Consulta 4 con FOR. Cuenta el número de asegurados por póliza. :)
+for $poliza in //poliza
+return
+  <datos>
+    {$poliza/tomador , count($poliza), count($poliza/asegurado)}
+  </datos>
+
+(: Consulta 4 con LET. Cuenta el total de asegurados, el total de todas las pólizas. :)
+let $poliza := //poliza
+return
+  <datos>
+    {$poliza/tomador , count($poliza),count($poliza/asegurado)}
+  </datos>
+
+(: Consulta 5 con FOR. Muestra todas las combinaciones posibles de tomador y poliza. :)
+for $a in //poliza/tomador ,$b in //poliza/numero
+return
+  <datos>
+    {$a , $b}
+  </datos>
+
+(: Consulta 5 con LET. Muestra los tomadores y luego las polizas. :)
+let $a := //poliza/tomador ,$b := //poliza/numero
+return
+  <datos>
+    {$a , $b}
+  </datos>
+
+(: Consulta 6. Forma habitual de trabajar con LET y FOR. FOR guia la consulta y LET ayuda a simplificarla :)
+for $a in //poliza
+let $b := $a/tomador, $c := $a/numero, $d := count($a/asegurado)
+return
+  <datos num="{$d}">
+    {$b , $c}
+  </datos>

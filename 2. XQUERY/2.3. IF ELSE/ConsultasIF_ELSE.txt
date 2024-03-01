@@ -1,0 +1,20 @@
+(: Consulta 1: IF ELSE. Diferenciar asignaturas del primer cuatrimestre y del segundo mostrando un texto distinto o aplicando estilos diferentes :)
+for $asig in /universidad/asignaturas/asignatura
+return
+  if ($asig/trimestre = 1) then (
+    <p class="parcial1">{data($asig/nombre)}: Primer cuatrimestre </p>
+  ) else (
+    <p class="parcial2">{data($asig/nombre)}: Segundo cuatrimestre </p>
+  )
+
+(: Consulta 2: Identificar las carreras de duración media, corta y larga. :)
+for $car in /universidad/carreras/carrera
+let $cred := $car/creditos
+return
+  if ($cred < 200) then (
+    <p class="corta">{data($car/nombre)} (corta) </p>
+  ) else if  ($cred < 400) then (
+     <p class="media">{data($car/nombre)} (media) </p>
+   ) else  (
+     <p class="larga">{data($car/nombre)} (larga) </p>
+  )

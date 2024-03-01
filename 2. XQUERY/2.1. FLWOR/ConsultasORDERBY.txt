@@ -1,0 +1,30 @@
+(: Consulta 1. Expresión con ORDER BY. Ordena las garantías en vigor por el tipo. :)
+for $g in //garantia
+where $g/@vigor="S"
+order by $g/tipo
+return $g
+
+(: Consulta 1. Expresión con ORDER BY y DESCENDING. Ordena las garantías en vigor por el tipo en orden descendiente de mayor a menor. :)
+for $g in //garantia
+where $g/@vigor="S"
+order by $g/tipo descending
+return $g
+
+(: Consulta 2. Expresión con ORDER BY, Ordena las garantías en vigor por el capital.
+   Cuidado!! Por defecto, ordena por caracteres no por valores. :)
+for $g in //garantia
+where $g/@vigor="S"
+order by $g/capital descending
+return $g
+(: Consulta 2. Expresión con ORDER BY, Ordena las garantías en vigor por el capital.
+   PAra ordenar por valores, se usa la función number() que convierte el texto en el número correspondiente. :)
+for $g in //garantia
+where $g/@vigor="S"
+order by number($g/capital) descending
+return $g
+
+(: Consulta 3. Expresión con ORDER BY. Ordenar varios criterios. Ordena las garantías en vigor por el tipo y el capital. :)
+for $g in //garantia
+where $g/@vigor="S"
+order by $g/tipo, number($g/capital) descending
+return $g

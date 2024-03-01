@@ -1,0 +1,35 @@
+(: Consulta 1: Nombre de la carrera en la que estudia Víctor Manuel :)
+let $cod := (
+  for $alum in //alumno
+  where $alum/nombre = "Víctor Manuel"
+  return $alum//carrera/@codigo  
+)
+for $carr in //carrera
+where $carr/@id = $cod
+return $carr/nombre
+
+
+(: Consulta 2: Primer apellido  de los alumnos matriculados en Ingeniería del Software :)
+let $cod := (
+  for $asig in //asignatura
+  where $asig/nombre = "Ingeniería del Software"
+  return $asig/@id  
+)
+for $alum in //alumno
+where $alum//asignatura/@codigo = $cod
+return $alum/apellido1
+
+(: Consulta 3: Nombre de todos los estudiantes y cantidad y nombre de las asignaturas que estudia cada uno :)
+for $alum in //alumno
+return
+<alumno>
+  {$alum/nombre}
+  <asignaturas total="{count(/$alum//asignatura)}" >
+  {
+    let $cod := $alum//asignatura/@codigo
+    for $asig in //asignatura
+    where $asig/@id = $cod
+    return $asig/nombre
+  }
+ </asignaturas>
+</alumno>

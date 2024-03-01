@@ -1,0 +1,28 @@
+(: Consulta 1: Selecciona y muestra alumnado según su posición :)
+for $alum at $pos in //alumno
+return (
+  if ($pos = 3) then (
+    $alum/nombre,
+    <position>{$pos}</position>    
+  )
+)
+
+(: Consulta 2: Ordena los alumnos por nombre y muestra su posicion. Se debe usar una consulta anidada. :)
+let $datosOrdenados := (
+  for $alum in //alumno
+  order by $alum/nombre
+  return $alum
+)
+for $alum at $pos in $datosOrdenados
+return (
+  $alum/nombre,
+  <position>{$pos}</position>
+)
+
+(: Consulta 3: Muestra el último alumno después de ordenarlos :)
+let $datosOrdenados := (
+  for $alum in //alumno
+  order by $alum/nombre
+  return $alum
+)
+return $datosOrdenados[last()]/nombre
