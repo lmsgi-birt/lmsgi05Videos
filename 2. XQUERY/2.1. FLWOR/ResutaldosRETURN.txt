@@ -1,0 +1,48 @@
+(: Consulta 1 con FOR y RETURN.
+   Obtenemos todos los elementos "tomador" dentro de "poliza" :)
+for $poliza in /envio/poliza
+return
+  $poliza/tomador
+
+(: Consulta 2.0 con FOR y RETURN. 
+   Obtenemos todos los valores del elemento "tomador" dentro de "poliza" :)
+for $poliza in /envio/poliza
+return
+  data($poliza/tomador)
+
+(: Consulta 2.1 con FOR y RETURN. 
+   Obtenemos todos los valores de los elementos "tomador" y "numero" dentro de "poliza" 
+   Atención, se deben incluir dentro de paréntesis y separados por comas :)
+for $poliza in /envio/poliza
+return
+  (data($poliza/tomador), data($poliza/numero))
+
+(: Consulta 3 con FOR y RETURN.
+   Obtenemos todos los valores del elemento "tomador" dentro de "poliza"
+   Los incluimos dentro de una nueva etiqueta "nombre"
+   Atención a las llaves {} :)
+for $poliza in /envio/poliza
+return
+   <nombre>
+      {data($poliza/tomador)}
+   </nombre>
+
+(: Consulta 4 con FOR y RETURN.
+   Obtenemos todos los valores de los elementos "tomador" y "numero" dentro de "poliza"
+   Los incluimos dentro de una nueva etiqueta "nombre"
+   Atención a las llaves {} :)
+for $poliza in /envio/poliza
+return
+   <nombre>
+      {data($poliza/tomador), data($poliza/numero)}
+   </nombre>
+
+(: Consulta 4 con FOR y RETURN.
+   Obtenemos todos los valores de los elementos "tomador" y "numero" dentro de "poliza"
+   Los incluimos dentro de una nueva etiqueta "nombre"
+   Atención a las llaves {} :)
+for $poliza in /envio/poliza
+return
+   <nombre>
+      {data($poliza/tomador), data($poliza/numero)}
+   </nombre>
