@@ -5,7 +5,8 @@ return
   $poliza/tomador
 
 (: Consulta 2.0 con FOR y RETURN. 
-   Obtenemos todos los valores del elemento "tomador" dentro de "poliza" :)
+   Obtenemos todos los valores del elemento "tomador" dentro de "poliza"
+   Se debe usar la función data() :)
 for $poliza in /envio/poliza
 return
   data($poliza/tomador)
@@ -15,7 +16,7 @@ return
    Atención, se deben incluir dentro de paréntesis y separados por comas :)
 for $poliza in /envio/poliza
 return
-  (data($poliza/tomador), data($poliza/numero))
+  ( data($poliza/tomador), data($poliza/numero) )
 
 (: Consulta 3 con FOR y RETURN.
    Obtenemos todos los valores del elemento "tomador" dentro de "poliza"
@@ -29,20 +30,32 @@ return
 
 (: Consulta 4 con FOR y RETURN.
    Obtenemos todos los valores de los elementos "tomador" y "numero" dentro de "poliza"
-   Los incluimos dentro de una nueva etiqueta "nombre"
+   Los incluimos dentro de una nueva etiqueta "datos"
    Atención a las llaves {} :)
 for $poliza in /envio/poliza
 return
-   <nombre>
+   <datos>
       {data($poliza/tomador), data($poliza/numero)}
-   </nombre>
+   </datos>
 
-(: Consulta 4 con FOR y RETURN.
+(: Consulta 5 con FOR y RETURN.
    Obtenemos todos los valores de los elementos "tomador" y "numero" dentro de "poliza"
-   Los incluimos dentro de una nueva etiqueta "nombre"
+   Los incluimos dentro de un nuevo elemento "datos". El número será un atributo.
    Atención a las llaves {} :)
 for $poliza in /envio/poliza
 return
-   <nombre>
-      {data($poliza/tomador), data($poliza/numero)}
-   </nombre>
+   <datos num="{data($poliza/numero)}">
+      {data($poliza/tomador)}
+   </datos>
+
+(: Consulta 6 con FOR y RETURN.
+   Obtenemos todos los elementos "tomador" y los valores del elemento "numero" dentro de "poliza"
+   Los incluimos dentro de un nuevo elemento "datos". El número será un atributo.
+   Además, añadimos el total de asegurados con la función count()
+   Atención a las llaves {} :)
+for $poliza in /envio/poliza
+return
+  <datos num="{data($poliza/numero)}">
+    {$poliza/tomador}
+    <asegurados>{count($poliza/asegurado)}</asegurados>
+  </datos>
